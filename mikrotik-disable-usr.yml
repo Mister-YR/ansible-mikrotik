@@ -9,8 +9,8 @@ Write your name on line 6, save it, and then head back to GitHub Desktop.
    ignore_errors: yes
 
    vars:
-     name1: 'ops1'
-     name2: 'y.yudin'
+     name1: 'user1'
+     name2: 'user2'
 
    tasks:
      - name: disable user name1
