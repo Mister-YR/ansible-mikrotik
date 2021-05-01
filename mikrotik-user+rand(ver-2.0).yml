@@ -1,0 +1,60 @@
+# https://www.passwordrandom.com/query?command=password
+- hosts: mikrotik-test
+  connection: network_cli
+  gather_facts: true
+  ignore_errors: yes
+
+  vars:
+     pwd: "{{ lookup('url', 'https://www.passwordrandom.com/query?command=password') }}"
+
+  tasks:
+# copy file to mikrotik
+  - name: copy .pub to mikrotik
+    raw: scp -P 22 /etc/ansible/ssh-keys/* admin@{{ inventory_hostname }}:./
+
+# delet all users where comment!="ACVA"
+  - name: delete all users without comment "ACVA"
+    routeros_command:
+     commands: '/user remove [find where comment !="ACVA"]'
+
+# pass all users to variable user_list
+  - name: get users on router
+    routeros_command:
+     commands: '/user print'
+    register: user_list
+
+# add new user & skip existed
+  - name: user add
+    routeros_command:
+     commands: '/user add name="{{ item }}" password="{{ pwd }}" group=full comment=ACVA'
+    with_lines: cat /etc/ansible/u-name.txt
+    when: not user_list.stdout is search('{{item}}')
+
+# get users with ssh-keys & pass to variable
+  - name: get user with ssh-keys
+    routeros_command:
+     commands: '/user ssh-keys print'
+    register: key_list
+
+# key import & skip exist key users
+  - name: add keys
+    routeros_command:
+     commands: '/user ssh-keys import user={{ item }} public-key-file={{ item }}.pub'
+    with_lines: cat /etc/ansible/u-name.txt
+    when: not key_list.stdout is search('{{item}}')
+
+# show users with ssh-keys
+  - name: get user with ssh-keys
+    routeros_command:
+     commands: '/user ssh-keys print'
+    register: cmdout
+  - debug:
+     var: cmdout.stdout_lines
+
+# show all users on router
+  - name: all users on mikrotik
+    routeros_command:
+     commands: '/user print'
+    register: cmdout
+  - debug:
+     var: cmdout.stdout_lines
