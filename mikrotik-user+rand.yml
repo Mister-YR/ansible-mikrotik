@@ -1,0 +1,21 @@
+- hosts: mikrotik-test
+  connection: network_cli
+  gather_facts: true
+
+  vars:
+     pwd: "{{ lookup('url', 'https://www.passwordrandom.com/query?command=password') }}"
+
+  tasks:
+  - name: copy keys
+    raw: scp -P 22 /etc/ansible/ssh-keys/* admin@{{ inventory_hostname }}:./
+
+  - name: get users on router
+    routeros_command:
+     commands: '/user print'
+    register: user_list
+
+  - name: user add
+    routeros_command:
+     commands: '/user add name="{{ item }}" password="{{ pwd }}" group=full comment=ACVA'
+    with_lines: cat /etc/ansible/u-name.txt
+    when: not user_list.stdout is search('{{item}}')
