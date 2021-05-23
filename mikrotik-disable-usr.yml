@@ -1,8 +1,8 @@
 # Disable /user /ppp secrets accounts on mikrotik 
 - hosts: 192.168.168.231
-   connection: network_cli
-   gather_facts: true
-   ignore_errors: yes
+  connection: network_cli
+  gather_facts: true
+  ignore_errors: yes
 
    vars:
      name1: 'user1'
