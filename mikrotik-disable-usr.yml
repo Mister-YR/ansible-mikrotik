@@ -4,20 +4,20 @@
   gather_facts: true
   ignore_errors: yes
 
-   vars:
-     name1: 'user1'
-     name2: 'user2'
+  vars:
+    name1: 'user1'
+    name2: 'user2'
 
-   tasks:
-     - name: disable user name1
-       routeros_command:
-        commands: '/user set disabled=yes [find where name={{ name1 }}]'
-     - name: disable user (name2)
-       routeros_command:
-        commands: '/user set disabled=yes [find where name={{ name2 }}]'
-     - name: disable ppp-secret name1
-       routeros_command:
-        commands: '/ppp secret set disabled=yes [find where name={{ name1 }}]'
-     - name: disable ppp-secret name2
-       routeros_command:
-        commands: '/ppp secret set disabled=yes [find where name={{ name2 }}]'
+  tasks:
+    - name: disable user name1
+      routeros_command:
+       commands: '/user set disabled=yes [find where name={{ name1 }}]'
+    - name: disable user (name2)
+      routeros_command:
+       commands: '/user set disabled=yes [find where name={{ name2 }}]'
+    - name: disable ppp-secret name1
+      routeros_command:
+       commands: '/ppp secret set disabled=yes [find where name={{ name1 }}]'
+    - name: disable ppp-secret name2
+      routeros_command:
+       commands: '/ppp secret set disabled=yes [find where name={{ name2 }}]'
