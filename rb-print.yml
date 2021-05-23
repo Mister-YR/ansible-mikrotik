@@ -1,4 +1,4 @@
--  hosts: kotik-home
+-  hosts: 192.168.168.231
    connection: network_cli
    gather_facts: true
    ignore_errors: yes
