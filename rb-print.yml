@@ -2,10 +2,6 @@
    connection: network_cli
    gather_facts: true
    ignore_errors: yes
-   
-   vars:
-    ansible_network_os=routeros
-    ansible_connections=network_cli
 
    tasks:
      - name: rb-print
