@@ -1,0 +1,9 @@
+-  hosts: kotik-home
+   connection: network_cli
+   gather_facts: true
+   ignore_errors: yes
+
+   tasks:
+     - name: rb-print
+       routeros_command:
+        commands: /system routerboard print
