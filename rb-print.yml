@@ -6,4 +6,4 @@
    tasks:
      - name: rb-print
        routeros_command:
-        commands: /system routerboard print
+        commands: /system resource print
