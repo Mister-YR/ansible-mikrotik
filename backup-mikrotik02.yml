@@ -1,0 +1,23 @@
+- hosts: mikrotik-test
+  connection: network_cli
+  gather_facts: false
+
+  tasks:
+  - name: create backup
+    routeros_command:
+      commands: /system backup save name=bcp-{{inventory_hostname}}
+    register: cmdout
+  - debug:
+       var: cmdout.stdout_lines
+  - name: create cfg
+    routeros_command:
+      commands: /export file=cfg-{{inventory_hostname}}
+    register: cmdout
+  - debug:
+       var: cmdout.stdout_lines
+  - name: copy to sftp 
+    routeros_command:
+      commands: /tool fetch url="sftp://sftp-ip/upload/bcp-{{inventory_hostname}}.backup" src-path=bcp-{{inventory_hostname}}.backup user=USER mode=ftp password=PWD upload=yes
+    register: cmdout
+  - debug:
+       var: cmdout.stdout_lines
