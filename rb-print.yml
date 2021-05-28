@@ -1,4 +1,4 @@
--  hosts: 192.168.168.231
+-  hosts: 172.16.1.102
    connection: network_cli
    gather_facts: true
    ignore_errors: yes
