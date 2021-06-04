@@ -1,4 +1,4 @@
--  hosts: 172.16.1.102
+-  hosts: all
    connection: network_cli
    gather_facts: true
    ignore_errors: yes
