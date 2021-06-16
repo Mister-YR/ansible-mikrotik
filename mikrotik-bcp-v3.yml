@@ -3,7 +3,7 @@
   gather_facts: true
   
   tasks:
-  # but first you need to import module *ansible_network_os=community.routeros.routeros*
+  # first you need import module *ansible_network_os=community.routeros.routeros*
   - name: Collect all facts from the device
     community.routeros.facts:
       gather_subset: all
