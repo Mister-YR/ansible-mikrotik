@@ -1,7 +1,18 @@
- hosts: mikrotik-test
+#**********************************************************************************************************
+# first of all need to install module to docker container
+# $ docker ps
+# $ docker exec -it awx_task
+# $ ansible-galaxy collection install community.routeros
+#**********************************************************************************************************
+
+- hosts: mikrotik-test
   connection: network_cli
   gather_facts: true
-  
+#**********************************************************************************************************
+# {{ ansible_date_time.date }} ansible system system date
+# {{ ansible_net_hostname }}  get mikrotik-identiry from facts
+#**********************************************************************************************************
+
   tasks:
   # first you need import module *ansible_network_os=community.routeros.routeros*
   - name: Collect all facts from the device
