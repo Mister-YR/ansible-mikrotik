@@ -4,7 +4,7 @@
    ignore_errors: yes
 
    tasks:
-     - name: set-ntp-server
+     - name: set-ntp-client
        routeros_command:
         commands: /system ntp client set enabled=yes primary-ntp=162.159.200.123 secondary-ntp=62.149.0.30
      - name: set-time-zone
