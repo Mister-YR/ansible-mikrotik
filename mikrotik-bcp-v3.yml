@@ -10,7 +10,7 @@
   gather_facts: true
 #**********************************************************************************************************
 # {{ ansible_date_time.date }} ansible system system date
-# {{ ansible_net_hostname }}  get mikrotik-identiry from facts
+# {{ ansible_net_hostname }}  get mikrotik-identity from facts
 #**********************************************************************************************************
 
   tasks:
