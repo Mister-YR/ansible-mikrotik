@@ -5,7 +5,7 @@
 # $ ansible-galaxy collection install community.routeros
 #**********************************************************************************************************
 
-- hosts: mikrotik-test
+- hosts: all
   connection: network_cli
   gather_facts: true
 #**********************************************************************************************************
@@ -34,10 +34,10 @@
        var: cmdout.stdout_lines
   # copy beckup to sftp and add date to file name - ansible_date_time.date
   - name: copy config to sftp
-    routeros_command:
-      commands: '/tool fetch url="sftp://192.168.168.235/upload/cfg-{{ ansible_net_hostname }}-{{ ansible_date_time.date }}.rsc" src-path=cfg-{{ ansible_net_hostname }}.rsc user=USER mode=ftp password=PASS upload=yes'
+    routeros_command: 
+      commands: '/tool fetch url=sftp://192.168.168.70/uploads/cfg-{{ ansible_net_hostname }}-{{ ansible_date_time.date }}.rsc src-path=cfg-{{ ansible_net_hostname }}.rsc user={{ sftp_user }} mode=ftp password={{ sftp_pass }} upload=yes'
     register: cmdout
   - name: copy backup to sftp
-    routeros_command:
-      commands: '/tool fetch url="sftp://192.168.168.235/upload/bcp-{{ ansible_net_hostname }}-{{ ansible_date_time.date }}.backup" src-path=bcp-{{ ansible_net_hostname }}.backup user=USER mode=ftp password=PASS upload=yes'
+    routeros_command: 
+      commands: '/tool fetch url=sftp://192.168.168.70/uploads/bcp-{{ ansible_net_hostname }}-{{ ansible_date_time.date }}.backup src-path=bcp-{{ ansible_net_hostname }}.backup user={{ sftp_user }} mode=ftp password={{ sftp_pass }} upload=yes'
     register: cmdout
